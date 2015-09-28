@@ -3,12 +3,21 @@ package courses.model;
 import java.util.*;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Core, consists of modules.
+ * 
+ * Contains name, start/end dates and list of modules.
+ * 
+ */
+
 @XStreamAlias("Course")
 public class Course {
 	private String name;
 	private Calendar startDate;
 	private Calendar endDate;
 	private List<Module> modules = new ArrayList<Module>();
+	
+	//constructors
 	
 	public Course(){};
 	
@@ -17,6 +26,8 @@ public class Course {
 		setStartDate(startDate);
 		setEndDate(endDate);
 	}
+	
+	//getters & setters
 	
 	public String getName() {
 		return name;
@@ -46,10 +57,30 @@ public class Course {
 		this.modules = modules;
 	}
 	
+	//other methods
+	
+	/**
+	 * Add module to the list of modules.
+	 * 
+	 * @param module module to be added
+	 */
 	public void addModule(Module module) {
 		this.modules.add(module);
 	}
 	
+	/**
+	 * Returns string representation of date in format DD.MM.YYYY.
+	 * 
+	 * @param c Calendar instance to be converted
+	 * @return String representation of date
+	 */
+	private String formatDate(Calendar c) {
+		return c.get(Calendar.DAY_OF_MONTH) + "." +
+				(c.get(Calendar.MONTH) + 1) + "." +
+				c.get(Calendar.YEAR);
+	}
+	
+	@Override
 	public String toString() {
 		return "Course name: " + name + 
 				", start date: " + formatDate(startDate) +
@@ -57,10 +88,6 @@ public class Course {
 				modules;
 	}
 	
-	private String formatDate(Calendar c) {
-		return c.get(Calendar.DAY_OF_MONTH) + "." +
-				(c.get(Calendar.MONTH) + 1) + "." +
-				c.get(Calendar.YEAR);
-	}
+	
 	
 }

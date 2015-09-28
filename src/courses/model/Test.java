@@ -1,8 +1,15 @@
 package courses.model;
 
+/**
+ * A part of module.
+ *
+ * May be hidden or visible.
+ */
 public class Test {
 	private String name;
 	private boolean hidden;
+	
+	//constructors
 	
 	public Test(){};
 	
@@ -11,6 +18,8 @@ public class Test {
 		setHidden(hidden);
 	}
 
+	//getters & setters
+	
 	public String getName() {
 		return name;
 	}
@@ -27,6 +36,7 @@ public class Test {
 		this.hidden = hidden;
 	}
 	
+	@Override
 	public String toString() {
 		return "Test name: " + name + (hidden ? " is hidden. " : " is visible. ");
 	}

@@ -2,10 +2,19 @@ package courses.model;
 	
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Basic part or the course.
+ * 
+ * Basic part of the course. May contain a test.
+ * As default, test = null. If you want to add test,
+ * use appropriate constructor or method setTest(Test test)
+ */
 @XStreamAlias("Module")
 public class Module {
 	private String name;
 	private Test test;
+	
+	//constructors
 	
 	public Module(){};
 	
@@ -18,6 +27,8 @@ public class Module {
 		setTest(test);
 	}
 
+	//getters & setters
+	
 	public String getName() {
 		return name;
 	}
@@ -34,6 +45,7 @@ public class Module {
 		this.test = test;
 	}
 	
+	@Override
 	public String toString() {
 		return "Module name: " + name + ", " + 
 				(test == null ? "no test" : test);

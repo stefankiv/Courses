@@ -3,10 +3,18 @@ package courses.model;
 import java.util.*;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
+/**
+ * Contains list of courses.
+ * 
+ * @author St. Roman
+ */
+
 @XStreamAlias("Academy")
 public class Academy {
 	private String name;
 	private List<Course> courses = new ArrayList<Course>();
+	
+	//constructors
 	
 	public Academy(){};
 	
@@ -19,6 +27,8 @@ public class Academy {
 		setCourses(courses);
 	}
 
+	//getters&setters
+	
 	public String getName() {
 		return name;
 	}
@@ -35,10 +45,17 @@ public class Academy {
 		this.courses = courses;
 	}
 	
+	//other methods
+	/**
+	 * Add course to the list of courses.
+	 * 
+	 * @param course course to be added
+	 */
 	public void addCourse(Course course) {
 		courses.add(course);
 	}
 
+	@Override
 	public String toString() {
 		return "Academy name: " + name + courses;
 	}
