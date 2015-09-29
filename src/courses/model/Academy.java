@@ -1,6 +1,7 @@
 package courses.model;
 
 import java.util.*;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -53,6 +54,27 @@ public class Academy {
 	 */
 	public void addCourse(Course course) {
 		courses.add(course);
+	}
+	
+	/**
+	 * Returns list of courses, which starts between two dates
+	 * 
+	 * @param beginningDate beginning date
+	 * @param endDate end date
+	 * @return list of courses, which starts between beginning date and end date
+	 */
+	public List<Course> renameThisMethodWithSomeProperName(Calendar beginningDate, Calendar endDate) {  
+		//getCoursesWhichStartsBetween() ??????
+		
+		List<Course> list = new ArrayList<Course>();
+		for (Course c : courses){
+			if (c.getStartDate().after(beginningDate) 
+					&& c.getStartDate().before(endDate)) {
+				list.add(c);
+			}
+		}
+		
+		return list;
 	}
 
 	@Override

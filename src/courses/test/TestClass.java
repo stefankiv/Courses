@@ -2,6 +2,7 @@ package courses.test;
 
 import courses.io.*;	
 import courses.model.*;
+
 import java.util.*;
 import java.io.*;
 
@@ -14,7 +15,12 @@ public class TestClass {
 		//Academy ac = getAcademyFromConsole();
 		
 		System.out.println(ac);
+		Calendar beginningDate = new GregorianCalendar(2015, 4, 15);
+		Calendar endDate = new GregorianCalendar(2015, 6, 15);
+		System.out.println(ac.renameThisMethodWithSomeProperName(beginningDate, endDate));
 		
+		
+		/*
 		String path = "resources/out.json";
 		//String path = "resources/out.xml";
 		
@@ -33,7 +39,7 @@ public class TestClass {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		*/
 		
 	}
 	
