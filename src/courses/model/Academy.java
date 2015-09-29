@@ -17,7 +17,7 @@ public class Academy {
 	
 	//constructors
 	
-	public Academy(){};
+	public Academy() { };
 	
 	public Academy(String name) {
 		setName(name);
@@ -67,7 +67,7 @@ public class Academy {
 		//getCoursesWhichStartsBetween() ??????
 		
 		List<Course> list = new ArrayList<Course>();
-		for (Course c : courses){
+		for (Course c : courses) {
 			if (c.getStartDate().after(beginningDate) 
 					&& c.getStartDate().before(endDate)) {
 				list.add(c);

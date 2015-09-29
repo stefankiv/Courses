@@ -11,9 +11,9 @@ public class Test {
 	
 	//constructors
 	
-	public Test(){};
+	public Test() { };
 	
-	public Test(String name, boolean hidden){
+	public Test(String name, boolean hidden) {
 		setName(name);
 		setHidden(hidden);
 	}
@@ -38,7 +38,7 @@ public class Test {
 	
 	@Override
 	public String toString() {
-		return "Test name: " + name + (hidden ? " is hidden. " : " is visible. ");
+		return "Test name: " + name + (hidden ? ", is hidden. " : ", is visible. ");
 	}
 
 }

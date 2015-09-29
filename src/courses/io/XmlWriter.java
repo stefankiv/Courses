@@ -1,12 +1,12 @@
 package courses.io;
 
-import courses.model.*;
-
 import java.io.*;
 
 import com.thoughtworks.xstream.*;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+
+import courses.model.*;
 
 public class XmlWriter extends AbstractFileWriter {
 	public XmlWriter(File file) {

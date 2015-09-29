@@ -1,13 +1,15 @@
 package courses.io;
 
+import java.io.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;	
 
 import courses.model.Academy;
 
-import java.io.*;
+
 
 public class JsonWriter extends AbstractFileWriter {
-	public JsonWriter(File file){
+	public JsonWriter(File file) {
 		super(file);
 	}
 	

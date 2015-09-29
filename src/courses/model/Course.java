@@ -1,6 +1,7 @@
 package courses.model;
 
 import java.util.*;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -19,7 +20,7 @@ public class Course {
 	
 	//constructors
 	
-	public Course(){};
+	public Course() { };
 	
 	public Course(String name, Calendar startDate, Calendar endDate) {
 		setName(name);
@@ -49,12 +50,20 @@ public class Course {
 		this.endDate = endDate;
 	}
 	
-	public List<Module> getModules(){
+	public List<Module> getModules() {
 		return modules;
 	}
 	
 	public void setModules(List<Module> modules) {
 		this.modules = modules;
+	}
+	
+	public String getPrettyStartDate() {
+		return formatDate(startDate);
+	}
+	
+	public String getPrettyEndDate() {
+		return formatDate(endDate);
 	}
 	
 	//other methods
@@ -75,17 +84,17 @@ public class Course {
 	 * @return String representation of date
 	 */
 	private String formatDate(Calendar c) {
-		return c.get(Calendar.DAY_OF_MONTH) + "." +
-				(c.get(Calendar.MONTH) + 1) + "." +
-				c.get(Calendar.YEAR);
+		return c.get(Calendar.DAY_OF_MONTH) + "." 
+				+ (c.get(Calendar.MONTH) + 1) + "." 
+				+ c.get(Calendar.YEAR);
 	}
 	
 	@Override
 	public String toString() {
-		return "Course name: " + name + 
-				", start date: " + formatDate(startDate) +
-				", end date: " + formatDate(endDate) +
-				modules;
+		return "Course name: " + name
+				+ ", start date: " + formatDate(startDate)
+				+ ", end date: " + formatDate(endDate)
+				+ modules;
 	}
 	
 	

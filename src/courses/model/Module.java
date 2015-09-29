@@ -15,8 +15,7 @@ public class Module {
 	private Test test;
 	
 	//constructors
-	
-	public Module(){};
+	public Module() { };
 	
 	public Module(String name) {
 		setName(name);
@@ -47,8 +46,8 @@ public class Module {
 	
 	@Override
 	public String toString() {
-		return "Module name: " + name + ", " + 
-				(test == null ? "no test" : test);
+		return "Module name: " + name + ", " 
+				+ (test == null ? "no test" : test);
 	}
 	
 }

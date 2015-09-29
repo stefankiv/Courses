@@ -1,25 +1,32 @@
 package courses.test;
 
-import courses.io.*;	
-import courses.model.*;
-
-import java.util.*;
 import java.io.*;
+import java.util.*;
+
+import courses.io.*;	
+import courses.io.marshaller.*;
+import courses.model.*;
 
 public class TestClass {
 
 	public static void main(String[] args) {
 		
 		Academy ac = getFixedAcademy();
-		
 		//Academy ac = getAcademyFromConsole();
-		
 		System.out.println(ac);
-		Calendar beginningDate = new GregorianCalendar(2015, 4, 15);
-		Calendar endDate = new GregorianCalendar(2015, 6, 15);
-		System.out.println(ac.renameThisMethodWithSomeProperName(beginningDate, endDate));
 		
+		//marshaller test
+		//marshallerTest();
+		Marshaller m = new Marshaller();
+		String s = m.marshall(ac);
+		System.out.println(s);
+		Academy ac2 = m.unmarshallAcademy(s);
+		System.out.println(ac2);
 		
+		//get list of courses which starts between two dates
+		//getListOfCoursesWhichStartsBetweenTwoDates(ac);
+		
+		//input/output
 		/*
 		String path = "resources/out.json";
 		//String path = "resources/out.xml";
@@ -77,4 +84,45 @@ public class TestClass {
 		
 		return ac;
 	}
+	
+	public static void getListOfCoursesWhichStartsBetweenTwoDates(Academy ac) {
+		Calendar beginningDate = new GregorianCalendar(2015, 4, 15);
+		Calendar endDate = new GregorianCalendar(2015, 6, 15);
+		System.out.println(ac.renameThisMethodWithSomeProperName(beginningDate, endDate));
+	}
+	
+	public static void marshallerTest() {
+		Test test = new Test("qweTest", true);
+		Module module = new Module("qweModule", test);
+		Course course = new Course();
+		course.setName("qweCourse");
+		course.setStartDate(new GregorianCalendar(2015, 5, 25));
+		course.setEndDate(new GregorianCalendar(2015, 7, 24));
+		course.addModule(new Module("Module 1"));
+		course.addModule(new Module("Module 2", test));
+		
+		Marshaller m = new Marshaller();
+		String str;
+		
+		System.out.println(course);
+		str = m.marshall(course);
+		System.out.println(str);
+		//Test temp = m.unmarshallTest(str);
+		//Module temp = m.unmarshallModule(str);
+		//Course temp = m.unmarshallCourse(str);
+		//System.out.println(temp);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

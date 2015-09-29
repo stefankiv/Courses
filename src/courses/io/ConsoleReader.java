@@ -23,10 +23,10 @@ public class ConsoleReader extends AbstractReader {
 		return academy;
 	}
 	
-	private List<Course> getListOfCourses(int count){
+	private List<Course> getListOfCourses(int count) {
 		List<Course> list = new ArrayList<Course>();
 		if (count > 0) {
-			for (int i = 0; i < count; i++){
+			for (int i = 0; i < count; i++) {
 				list.add(getCourse());
 			}
 		}
@@ -55,7 +55,7 @@ public class ConsoleReader extends AbstractReader {
 	private List<Module> getListOfModules(int count) {
 		List<Module> list = new ArrayList<Module>();
 		if (count > 0) {
-			for (int i = 0; i < count; i++){
+			for (int i = 0; i < count; i++) {
 				list.add(getModule());
 			}
 		}
@@ -64,7 +64,9 @@ public class ConsoleReader extends AbstractReader {
 	}
 
 	private GregorianCalendar getDate() {
-		int day, month, year;
+		int day;
+		int month;
+		int year;
 		System.out.print("day of month: ");
 		day = sc.nextInt();
 		System.out.print("month (0 for January): ");
@@ -82,7 +84,7 @@ public class ConsoleReader extends AbstractReader {
 		
 		System.out.print("Does module contain a test? (y/n): ");
 		String answer = sc.next();
-		while(!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")){
+		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			System.out.print("Please enter \"y\" or \"n\": ");
 			answer = sc.next();
 		}
@@ -104,7 +106,7 @@ public class ConsoleReader extends AbstractReader {
 		
 		System.out.print("Should it be hidden? (y/n): ");
 		String answer = sc.next();
-		while(!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")){
+		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			System.out.print("Please enter \"y\" or \"n\": ");
 			answer = sc.next();
 		}

@@ -3,7 +3,7 @@ package courses.io;
 import java.io.File;
 
 public class WriterFactory {
-	public static AbstractWriter getWriter(Object obj){
+	public static AbstractWriter getWriter(Object obj) {
 		AbstractWriter writer = null;
 		String name = ((File) obj).getName();
 		String extension = name.substring(name.lastIndexOf('.') + 1);
