@@ -14,7 +14,7 @@ public class ConsoleReader extends AbstractReader {
 	
 	private Academy getAcademy() {
 		Academy academy = new Academy();
-		System.out.print("Enter the name of the Academy: ");
+		System.out.print("Enter the name of the Academy: "); //TODO crash when more than 1 word entered
 		academy.setName(sc.next());
 		
 		System.out.print("Enter a number of courses: ");
