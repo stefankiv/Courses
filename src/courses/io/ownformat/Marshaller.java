@@ -12,6 +12,7 @@ import courses.model.*;
  * @author St. Roman
  */
 public class Marshaller {
+	Validator validator = new Validator();
 	
 	public Marshaller() { };
 	
@@ -42,35 +43,47 @@ public class Marshaller {
 				+ marshallList(academy.getCourses(), Separators.ACADEMY_SEPARATOR);
 	}
 	
+	/**
+	 * Expected format of string "StringName:booleanHidden".
+	 * Returns null if test doesn't exist.
+	 * @param s
+	 * @return Test or null, depends on incoming string
+	 */
 	public Test unmarshallTest(String s) {
+		if (s == null) {
+			return null;
+		}
 		Test result = new Test();
 		String[] parts = s.split(Separators.TEST_SEPARATOR);
 		
-		if (parts.length == 2) {
-			result.setName(parts[0]);
-			
-			switch (parts[1]) {
-			case "true": 
-				result.setHidden(true);
-				break;
-			case "false":
-				result.setHidden(false);
-				break;
-			default:
-				return null;
-			}
-			
-		} else {
-			return null;
-		}
+		if (parts.length == 2 && validator.validateTest(parts[0], parts[1])) {
+				result.setName(parts[0]);
+				
+				switch (parts[1]) {
+				case "true": 
+					result.setHidden(true);
+					break;
+				case "false":
+					result.setHidden(false);
+					break;
+				}
+		} 
 		
 		return result;
 	}
 	
+	/**
+	 * Expected format of string "StringName,StringTest".
+	 * Returns Module(name) if test doesn't exist.
+	 * @param s
+	 * @return Module(name) or Module(name, test), depends on incoming string
+	 */
 	public Module unmarshallModule(String s) {
 		Module result = new Module();
 		String[] parts = s.split(Separators.MODULE_SEPARATOR);
-		result.setName(parts[0]);
+		if (validator.validateName(parts[0])) {
+			result.setName(parts[0]);
+		}
 		if (parts.length == 1) {
 			return result;
 		}
@@ -78,14 +91,23 @@ public class Marshaller {
 		return result;
 	}
 	
+	/**
+	 * Expected format of string "StringName;StringStartDate;StringEndDate;~StringModules".
+	 * @param s
+	 * @return Course
+	 */
 	public Course unmarshallCourse(String s) {
 		Course result = new Course();
+		
 		String[] parts = s.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
 		String[] fields = parts[0].split(Separators.COURSE_SEPARATOR);
 		String[] modules = parts[1].split(Separators.COURSE_SEPARATOR);
-		result.setName(fields[0]);
-		result.setStartDate(unmarshallDate(fields[1]));
-		result.setEndDate(unmarshallDate(fields[2]));
+		
+		if (validator.validateCourse(fields[0], fields[1], fields[2])) {
+			result.setName(fields[0]);
+			result.setStartDate(unmarshallDate(fields[1]));
+			result.setEndDate(unmarshallDate(fields[2]));
+		}
 		
 		for (String module : modules) {
 			result.addModule(unmarshallModule(module));
@@ -97,7 +119,10 @@ public class Marshaller {
 		Academy result = new Academy();
 		String[] parts = s.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
 		
-		result.setName(parts[0]);
+		if (validator.validateName(parts[0])) {
+			result.setName(parts[0]);
+		}
+		
 		String[] courses = parts[1].split(Separators.ACADEMY_SEPARATOR);
 		
 		for (String course : courses) {
@@ -135,12 +160,10 @@ public class Marshaller {
 	 * @return appropriate GregorianCalendar
 	 */
 	private Calendar unmarshallDate(String s) {
-		final String DATE_SEPARATOR = "\\.";
-		String[] date = s.split(DATE_SEPARATOR);
-		int year, month, day;
-		year = Integer.parseInt(date[2]);
-		month = Integer.parseInt(date[1]);
-		day = Integer.parseInt(date[0]);
+		String[] date = s.split(Separators.DATE_SEPARATOR);
+		int year = Integer.parseInt(date[2]);
+		int month = Integer.parseInt(date[1]);
+		int day = Integer.parseInt(date[0]);
 		
 		return new GregorianCalendar(year, month, day);
 	}
