@@ -12,8 +12,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("Academy")
 public class Academy extends BasicNamedEntity {
-	//TODO use set instead of list
-	private List<Course> courses = new ArrayList<Course>();
+	//TODO generate equals() and hashcode()
+	private Set<Course> courses = new HashSet<Course>();
 	
 	//constructors
 	
@@ -23,18 +23,18 @@ public class Academy extends BasicNamedEntity {
 		setName(name);
 	}
 	
-	public Academy(String name, List<Course> courses) {
+	public Academy(String name, Set<Course> courses) {
 		this(name);
 		setCourses(courses);
 	}
 
 	//getters&setters
 	
-	public List<Course> getCourses() {
+	public Set<Course> getCourses() {
 		return courses;
 	}
 
-	public void setCourses(List<Course> courses) {
+	public void setCourses(Set<Course> courses) {
 		this.courses = courses;
 	}
 	

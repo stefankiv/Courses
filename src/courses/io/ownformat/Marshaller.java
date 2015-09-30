@@ -2,7 +2,7 @@ package courses.io.ownformat;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.Set;
 
 import courses.model.*;
 
@@ -136,14 +136,14 @@ public class Marshaller {
 	/**
 	 * Creates String representation of list
 	 * 
-	 * @param list list to be marshaled
+	 * @param set list to be marshaled
 	 * @param separator appropriate separator
 	 * @return marshaled list
 	 */
-	private <T extends BasicNamedEntity> String marshallList(List<T> list, String separator) {
+	private <T extends BasicNamedEntity> String marshallList(Set<T> set, String separator) {
 		String result = "";
 		
-		for (T item : list) {
+		for (T item : set) {
 			if (item instanceof Course) {
 				result += marshall((Course) item);
 			} else if (item instanceof Module) {

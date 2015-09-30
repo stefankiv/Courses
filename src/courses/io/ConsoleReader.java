@@ -18,20 +18,20 @@ public class ConsoleReader extends AbstractReader {
 		academy.setName(sc.next());
 		
 		System.out.print("Enter a number of courses: ");
-		academy.setCourses(getListOfCourses(sc.nextInt()));
+		academy.setCourses(getSetOfCourses(sc.nextInt()));
 		
 		return academy;
 	}
 	
-	private List<Course> getListOfCourses(int count) {
-		List<Course> list = new ArrayList<Course>();
+	private Set<Course> getSetOfCourses(int count) {
+		Set<Course> set = new HashSet<Course>();
 		if (count > 0) {
 			for (int i = 0; i < count; i++) {
-				list.add(getCourse());
+				set.add(getCourse());
 			}
 		}
 		
-		return list;
+		return set;
 	}
 
 	private Course getCourse() {
@@ -47,20 +47,20 @@ public class ConsoleReader extends AbstractReader {
 		course.setEndDate(getDate());
 		
 		System.out.print("Enter a number of modules: ");
-		course.setModules(getListOfModules(sc.nextInt()));
+		course.setModules(getSetOfModules(sc.nextInt()));
 		
 		return course;
 	}
 	
-	private List<Module> getListOfModules(int count) {
-		List<Module> list = new ArrayList<Module>();
+	private Set<Module> getSetOfModules(int count) {
+		Set<Module> set = new HashSet<Module>();
 		if (count > 0) {
 			for (int i = 0; i < count; i++) {
-				list.add(getModule());
+				set.add(getModule());
 			}
 		}
 		
-		return list;
+		return set;
 	}
 
 	private GregorianCalendar getDate() {

@@ -13,10 +13,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("Course")
 public class Course extends BasicNamedEntity {
-	//TODO use set instead of list
 	private Calendar startDate;
 	private Calendar endDate;
-	private List<Module> modules = new ArrayList<Module>();
+	private Set<Module> modules = new HashSet<Module>();
 	
 	//constructors
 	
@@ -43,11 +42,11 @@ public class Course extends BasicNamedEntity {
 		this.endDate = endDate;
 	}
 	
-	public List<Module> getModules() {
+	public Set<Module> getModules() {
 		return modules;
 	}
 	
-	public void setModules(List<Module> modules) {
+	public void setModules(Set<Module> modules) {
 		this.modules = modules;
 	}
 	
@@ -62,7 +61,7 @@ public class Course extends BasicNamedEntity {
 	//other methods
 	
 	/**
-	 * Add module to the list of modules.
+	 * Add module to the set of modules.
 	 * 
 	 * @param module module to be added
 	 */
