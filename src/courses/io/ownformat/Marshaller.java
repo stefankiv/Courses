@@ -12,11 +12,11 @@ import courses.model.*;
  * @author St. Roman
  */
 public class Marshaller {
-	Validator validator = new Validator();
+	private Validator validator = new Validator();
 	
 	public Marshaller() { };
 	
-	//Overloaded method marshall(arg) can get any of courses.model classes as argument
+	//Overloaded method marshall(arg) can get any of BasicNamedEntity subclasses as argument
 	public String marshall(Test test) {
 		return test.getName() + Separators.TEST_SEPARATOR + test.isHidden();
 	}
@@ -46,27 +46,19 @@ public class Marshaller {
 	/**
 	 * Expected format of string "StringName:booleanHidden".
 	 * Returns null if test doesn't exist.
-	 * @param s
+	 * @param test
 	 * @return Test or null, depends on incoming string
 	 */
-	public Test unmarshallTest(String s) {
-		if (s == null) {
+	public Test unmarshallTest(String test) {
+		if (test == null) {
 			return null;
 		}
 		Test result = new Test();
-		String[] parts = s.split(Separators.TEST_SEPARATOR);
+		String[] parts = test.split(Separators.TEST_SEPARATOR);
 		
 		if (parts.length == 2 && validator.validateTest(parts[0], parts[1])) {
 				result.setName(parts[0]);
-				
-				switch (parts[1]) {
-				case "true": 
-					result.setHidden(true);
-					break;
-				case "false":
-					result.setHidden(false);
-					break;
-				}
+				result.setHidden(parts[1].equals("true") ? true : false);
 		} 
 		
 		return result;
@@ -75,12 +67,12 @@ public class Marshaller {
 	/**
 	 * Expected format of string "StringName,StringTest".
 	 * Returns Module(name) if test doesn't exist.
-	 * @param s
+	 * @param module
 	 * @return Module(name) or Module(name, test), depends on incoming string
 	 */
-	public Module unmarshallModule(String s) {
+	public Module unmarshallModule(String module) { //TODO rename arg, add comments
 		Module result = new Module();
-		String[] parts = s.split(Separators.MODULE_SEPARATOR);
+		String[] parts = module.split(Separators.MODULE_SEPARATOR);
 		if (validator.validateName(parts[0])) {
 			result.setName(parts[0]);
 		}
@@ -93,13 +85,13 @@ public class Marshaller {
 	
 	/**
 	 * Expected format of string "StringName;StringStartDate;StringEndDate;~StringModules".
-	 * @param s
+	 * @param course
 	 * @return Course
 	 */
-	public Course unmarshallCourse(String s) {
+	public Course unmarshallCourse(String course) {
 		Course result = new Course();
 		
-		String[] parts = s.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
+		String[] parts = course.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
 		String[] fields = parts[0].split(Separators.COURSE_SEPARATOR);
 		String[] modules = parts[1].split(Separators.COURSE_SEPARATOR);
 		
@@ -115,9 +107,9 @@ public class Marshaller {
 		return result;
 	}
 	
-	public Academy unmarshallAcademy(String s) {
+	public Academy unmarshallAcademy(String academy) {
 		Academy result = new Academy();
-		String[] parts = s.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
+		String[] parts = academy.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
 		
 		if (validator.validateName(parts[0])) {
 			result.setName(parts[0]);
@@ -156,14 +148,14 @@ public class Marshaller {
 	
 	/**
 	 * Converts string like "DD.MM.YYYY" into GregorianCalendar
-	 * @param s string to be converted
+	 * @param date string to be converted
 	 * @return appropriate GregorianCalendar
 	 */
-	private Calendar unmarshallDate(String s) {
-		String[] date = s.split(Separators.DATE_SEPARATOR);
-		int year = Integer.parseInt(date[2]);
-		int month = Integer.parseInt(date[1]);
-		int day = Integer.parseInt(date[0]);
+	private Calendar unmarshallDate(String date) {
+		String[] dates = date.split(Separators.DATE_SEPARATOR);
+		int year = Integer.parseInt(dates[2]);
+		int month = Integer.parseInt(dates[1]) - 1;
+		int day = Integer.parseInt(dates[0]);
 		
 		return new GregorianCalendar(year, month, day);
 	}
