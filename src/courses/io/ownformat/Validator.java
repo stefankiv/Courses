@@ -1,5 +1,8 @@
 package courses.io.ownformat;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Used for validation string data.
  * @author Роман
@@ -24,7 +27,7 @@ public class Validator {
 	}
 	
 	public boolean validateName(String name) {
-		//some conditions here
+		//some conditions here Aaaaa
 		if (name instanceof String) { 
 			return true;
 		}
@@ -39,25 +42,16 @@ public class Validator {
 	}
 	
 	/**
-	 * Expected string "DD.MM.YYYY"
-	 * @param date
+	 * 
+	 * @param date string "DD.MM.YYYY" 
 	 * @return
 	 */
 	public boolean validateDate(String date) {
-		
-		String[] dates = date.split(Separators.DATE_SEPARATOR);
-		if (dates.length != 3) return false;
-		
-		String day = Integer.toString(Integer.parseInt(dates[0]));
-		if (!day.equals(dates[0])) return false;
-		
-		String month = Integer.toString(Integer.parseInt(dates[1]));
-		if (!month.equals(dates[1])) return false;
-		
-		String year = Integer.toString(Integer.parseInt(dates[2]));
-		if (!year.equals(dates[2])) return false;
-		
-		return true;
+		//TODO: add checking real dates (99.99.9999 shouldn't return true)
+		String regexp = "(\\d{1,2}\\.)(\\d{1,2}\\.)(\\d{4})";
+		Pattern p = Pattern.compile(regexp);
+		Matcher m = p.matcher(date);
+		return m.matches();
 	}
 	
 }
