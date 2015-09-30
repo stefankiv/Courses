@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 import courses.io.*;	
-import courses.io.marshaller.*;
+import courses.io.ownformat.*;
 import courses.model.*;
 
 public class TestClass {

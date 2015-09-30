@@ -1,4 +1,4 @@
-package courses.io.marshaller;
+package courses.io.ownformat;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -12,42 +12,39 @@ import courses.model.*;
  * @author St. Roman
  */
 public class Marshaller {
-	private static final String TEST_SEPARATOR = ":";
-	private static final String MODULE_SEPARATOR = ",";
-	private static final String COURSE_SEPARATOR = ";";
-	private static final String LIST_SEPARATOR = "~";
-	private static final String ACADEMY_SEPARATOR = "/";
 	
 	public Marshaller() { };
 	
 	//Overloaded method marshall(arg) can get any of courses.model classes as argument
 	public String marshall(Test test) {
-		return test.getName() + TEST_SEPARATOR + test.isHidden();
+		return test.getName() + Separators.TEST_SEPARATOR + test.isHidden();
 	}
 	
 	public String marshall(Module module) {
 		if (module.getTest() == null) {
-			return module.getName() + MODULE_SEPARATOR;
+			return module.getName() + Separators.MODULE_SEPARATOR;
 		}
-		return module.getName() + MODULE_SEPARATOR
+		return module.getName() + Separators.MODULE_SEPARATOR
 				+ marshall(module.getTest());
 	}
 	
 	public String marshall(Course course) {
-		return course.getName() + COURSE_SEPARATOR
-				+ course.getPrettyStartDate() + COURSE_SEPARATOR
-				+ course.getPrettyEndDate() + COURSE_SEPARATOR
-				+ LIST_SEPARATOR + marshallList(course.getModules(), COURSE_SEPARATOR);
+		return course.getName() + Separators.COURSE_SEPARATOR
+				+ course.getPrettyStartDate() + Separators.COURSE_SEPARATOR
+				+ course.getPrettyEndDate() + Separators.COURSE_SEPARATOR
+				+ Separators.LIST_SEPARATOR
+				+ marshallList(course.getModules(), Separators.COURSE_SEPARATOR);
 	}
 	
 	public String marshall(Academy academy) {
-		return academy.getName() + ACADEMY_SEPARATOR
-				+ LIST_SEPARATOR + marshallList(academy.getCourses(), ACADEMY_SEPARATOR);
+		return academy.getName() + Separators.ACADEMY_SEPARATOR
+				+ Separators.LIST_SEPARATOR
+				+ marshallList(academy.getCourses(), Separators.ACADEMY_SEPARATOR);
 	}
 	
 	public Test unmarshallTest(String s) {
 		Test result = new Test();
-		String[] parts = s.split(TEST_SEPARATOR);
+		String[] parts = s.split(Separators.TEST_SEPARATOR);
 		
 		if (parts.length == 2) {
 			result.setName(parts[0]);
@@ -72,7 +69,7 @@ public class Marshaller {
 	
 	public Module unmarshallModule(String s) {
 		Module result = new Module();
-		String[] parts = s.split(MODULE_SEPARATOR);
+		String[] parts = s.split(Separators.MODULE_SEPARATOR);
 		result.setName(parts[0]);
 		if (parts.length == 1) {
 			return result;
@@ -83,9 +80,9 @@ public class Marshaller {
 	
 	public Course unmarshallCourse(String s) {
 		Course result = new Course();
-		String[] parts = s.split(COURSE_SEPARATOR + LIST_SEPARATOR);
-		String[] fields = parts[0].split(COURSE_SEPARATOR);
-		String[] modules = parts[1].split(COURSE_SEPARATOR);
+		String[] parts = s.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
+		String[] fields = parts[0].split(Separators.COURSE_SEPARATOR);
+		String[] modules = parts[1].split(Separators.COURSE_SEPARATOR);
 		result.setName(fields[0]);
 		result.setStartDate(unmarshallDate(fields[1]));
 		result.setEndDate(unmarshallDate(fields[2]));
@@ -98,10 +95,10 @@ public class Marshaller {
 	
 	public Academy unmarshallAcademy(String s) {
 		Academy result = new Academy();
-		String[] parts = s.split(ACADEMY_SEPARATOR + LIST_SEPARATOR);
+		String[] parts = s.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
 		
 		result.setName(parts[0]);
-		String[] courses = parts[1].split(ACADEMY_SEPARATOR);
+		String[] courses = parts[1].split(Separators.ACADEMY_SEPARATOR);
 		
 		for (String course : courses) {
 			result.addCourse(unmarshallCourse(course));
