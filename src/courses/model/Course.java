@@ -12,8 +12,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 
 @XStreamAlias("Course")
-public class Course {
-	private String name;
+public class Course extends BasicNamedEntity {
 	private Calendar startDate;
 	private Calendar endDate;
 	private List<Module> modules = new ArrayList<Module>();
@@ -30,13 +29,6 @@ public class Course {
 	
 	//getters & setters
 	
-	public String getName() {
-		return name;
-	}
-	
-	public void setName(String name) {
-		this.name = name;
-	}
 	public Calendar getStartDate() {
 		return startDate;
 	}

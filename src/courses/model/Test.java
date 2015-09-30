@@ -5,8 +5,7 @@ package courses.model;
  *
  * May be hidden or visible.
  */
-public class Test {
-	private String name;
+public class Test extends BasicNamedEntity {
 	private boolean hidden;
 	
 	//constructors
@@ -19,14 +18,6 @@ public class Test {
 	}
 
 	//getters & setters
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 	
 	public boolean isHidden() {
 		return hidden;

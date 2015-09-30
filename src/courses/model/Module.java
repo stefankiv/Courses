@@ -10,8 +10,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  * use appropriate constructor or method setTest(Test test)
  */
 @XStreamAlias("Module")
-public class Module {
-	private String name;
+public class Module extends BasicNamedEntity {
 	private Test test;
 	
 	//constructors
@@ -27,14 +26,6 @@ public class Module {
 	}
 
 	//getters & setters
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 	
 	public Test getTest() {
 		return test;

@@ -11,8 +11,8 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
  */
 
 @XStreamAlias("Academy")
-public class Academy {
-	private String name;
+public class Academy extends BasicNamedEntity {
+	
 	private List<Course> courses = new ArrayList<Course>();
 	
 	//constructors
@@ -30,14 +30,6 @@ public class Academy {
 
 	//getters&setters
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public List<Course> getCourses() {
 		return courses;
 	}
@@ -65,6 +57,7 @@ public class Academy {
 	 */
 	public List<Course> renameThisMethodWithSomeProperName(Calendar beginningDate, Calendar endDate) {  
 		//getCoursesWhichStartsBetween() ??????
+		//varargs
 		
 		List<Course> list = new ArrayList<Course>();
 		for (Course c : courses) {
