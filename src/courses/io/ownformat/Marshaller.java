@@ -54,11 +54,12 @@ public class Marshaller {
 			return null;
 		}
 		Test result = new Test();
-		String[] parts = test.split(Separators.TEST_SEPARATOR);
+		String[] testParts = test.split(Separators.TEST_SEPARATOR);
+		// 0 - name, 1 - hidden
 		
-		if (parts.length == 2 && validator.validateTest(parts[0], parts[1])) {
-				result.setName(parts[0]);
-				result.setHidden(parts[1].equals("true") ? true : false);
+		if (testParts.length == 2 && validator.validateTest(testParts[0], testParts[1])) {
+				result.setName(testParts[0]);
+				result.setHidden(testParts[1].equals("true") ? true : false);
 		} 
 		
 		return result;
@@ -70,16 +71,18 @@ public class Marshaller {
 	 * @param module
 	 * @return Module(name) or Module(name, test), depends on incoming string
 	 */
-	public Module unmarshallModule(String module) { //TODO rename arg, add comments
+	public Module unmarshallModule(String module) {
 		Module result = new Module();
-		String[] parts = module.split(Separators.MODULE_SEPARATOR);
-		if (validator.validateName(parts[0])) {
-			result.setName(parts[0]);
+		String[] moduleParts = module.split(Separators.MODULE_SEPARATOR);
+		// 0 - name, 1 - test
+		
+		if (validator.validateName(moduleParts[0])) {
+			result.setName(moduleParts[0]);
 		}
-		if (parts.length == 1) {
+		if (moduleParts.length == 1) {
 			return result;
 		}
-		result.setTest(unmarshallTest(parts[1]));
+		result.setTest(unmarshallTest(moduleParts[1]));
 		return result;
 	}
 	
@@ -91,9 +94,14 @@ public class Marshaller {
 	public Course unmarshallCourse(String course) {
 		Course result = new Course();
 		
-		String[] parts = course.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
-		String[] fields = parts[0].split(Separators.COURSE_SEPARATOR);
-		String[] modules = parts[1].split(Separators.COURSE_SEPARATOR);
+		String[] courseParts = course.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
+		// 0 - Name;StartDate;EndDate, 1 - Modules
+		
+		String[] fields = courseParts[0].split(Separators.COURSE_SEPARATOR);
+		// 0 - name, 1 - startDate, 2 - endDate
+		
+		String[] modules = courseParts[1].split(Separators.COURSE_SEPARATOR);
+		// 0, 1, ..., length - modules
 		
 		if (validator.validateCourse(fields[0], fields[1], fields[2])) {
 			result.setName(fields[0]);
@@ -109,13 +117,14 @@ public class Marshaller {
 	
 	public Academy unmarshallAcademy(String academy) {
 		Academy result = new Academy();
-		String[] parts = academy.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
+		String[] academyParts = academy.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
+		// 0 - name, 1 - courses
 		
-		if (validator.validateName(parts[0])) {
-			result.setName(parts[0]);
+		if (validator.validateName(academyParts[0])) {
+			result.setName(academyParts[0]);
 		}
 		
-		String[] courses = parts[1].split(Separators.ACADEMY_SEPARATOR);
+		String[] courses = academyParts[1].split(Separators.ACADEMY_SEPARATOR);
 		
 		for (String course : courses) {
 			result.addCourse(unmarshallCourse(course));
@@ -131,7 +140,7 @@ public class Marshaller {
 	 * @param separator appropriate separator
 	 * @return marshaled list
 	 */
-	private <T> String marshallList(List<T> list, String separator) {
+	private <T extends BasicNamedEntity> String marshallList(List<T> list, String separator) {
 		String result = "";
 		
 		for (T item : list) {
