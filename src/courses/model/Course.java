@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("Course")
 public class Course extends BasicNamedEntity {
+	//TODO use set instead of list
 	private Calendar startDate;
 	private Calendar endDate;
 	private List<Module> modules = new ArrayList<Module>();

@@ -12,7 +12,7 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("Academy")
 public class Academy extends BasicNamedEntity {
-	
+	//TODO use set instead of list
 	private List<Course> courses = new ArrayList<Course>();
 	
 	//constructors
