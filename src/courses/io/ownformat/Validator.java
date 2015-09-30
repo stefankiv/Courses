@@ -26,12 +26,17 @@ public class Validator {
 		return true;
 	}
 	
+	/**
+	 * Name should begin with a Capital letter or any symbol, excluding whitespaces
+	 * 
+	 * @param name
+	 * @return true if name is correct, false if name starts with digit or whitespace
+	 */
 	public boolean validateName(String name) {
-		//some conditions here Aaaaa
-		if (name instanceof String) { 
-			return true;
-		}
-		return false;
+		String regexp = "^[^\\d\\sa-z].*";
+		Pattern p = Pattern.compile(regexp);
+		Matcher m = p.matcher(name);
+		return m.matches();
 	}
 	
 	public boolean validateBoolean(String bool) {
