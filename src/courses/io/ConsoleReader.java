@@ -14,11 +14,13 @@ public class ConsoleReader extends AbstractReader {
 	
 	private Academy getAcademy() {
 		Academy academy = new Academy();
-		System.out.print("Enter the name of the Academy: "); //TODO crash when more than 1 word entered
-		academy.setName(sc.next());
+		System.out.print("Enter the name of the Academy: "); //TODO try other ways to read from console
+		academy.setName(sc.nextLine());
 		
 		System.out.print("Enter a number of courses: ");
-		academy.setCourses(getSetOfCourses(sc.nextInt()));
+		int numOfCourses = sc.nextInt();
+		sc.nextLine();
+		academy.setCourses(getSetOfCourses(numOfCourses));
 		
 		return academy;
 	}
@@ -38,7 +40,7 @@ public class ConsoleReader extends AbstractReader {
 		Course course = new Course();
 				
 		System.out.print("Enter the name of the course: ");
-		course.setName(sc.next());
+		course.setName(sc.nextLine());
 		
 		System.out.println("Enter the start date: ");
 		course.setStartDate(getDate());
@@ -47,7 +49,9 @@ public class ConsoleReader extends AbstractReader {
 		course.setEndDate(getDate());
 		
 		System.out.print("Enter a number of modules: ");
-		course.setModules(getSetOfModules(sc.nextInt()));
+		int numOfModules = sc.nextInt();
+		sc.nextLine();
+		course.setModules(getSetOfModules(numOfModules));
 		
 		return course;
 	}
@@ -73,6 +77,7 @@ public class ConsoleReader extends AbstractReader {
 		month = sc.nextInt();
 		System.out.print("year: ");
 		year = sc.nextInt();
+		sc.nextLine();
 		return new GregorianCalendar(year, month, day);
 	}
 
@@ -80,13 +85,13 @@ public class ConsoleReader extends AbstractReader {
 		Module module = null;
 		
 		System.out.print("Enter the name of the module: ");
-		String name = sc.next();
+		String name = sc.nextLine();
 		
 		System.out.print("Does module contain a test? (y/n): ");
-		String answer = sc.next();
+		String answer = sc.nextLine();
 		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			System.out.print("Please enter \"y\" or \"n\": ");
-			answer = sc.next();
+			answer = sc.nextLine();
 		}
 		if (answer.equalsIgnoreCase("y")) {
 			Test test = getTest();
@@ -102,13 +107,13 @@ public class ConsoleReader extends AbstractReader {
 	private Test getTest() {
 		Test test = new Test();
 		System.out.print("Enter the name of the test: ");
-		test.setName(sc.next());
+		test.setName(sc.nextLine());
 		
 		System.out.print("Should it be hidden? (y/n): ");
-		String answer = sc.next();
+		String answer = sc.nextLine();
 		while (!answer.equalsIgnoreCase("y") && !answer.equalsIgnoreCase("n")) {
 			System.out.print("Please enter \"y\" or \"n\": ");
-			answer = sc.next();
+			answer = sc.nextLine();
 		}
 		if (answer.equalsIgnoreCase("y")) {
 			test.setHidden(true);
