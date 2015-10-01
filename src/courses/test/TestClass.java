@@ -17,11 +17,19 @@ public class TestClass {
 		
 		//marshaller test
 		//marshallerTest();
+		
 		Marshaller m = new Marshaller();
 		String s = m.marshall(ac);
 		System.out.println(s);
-		Academy ac2 = m.unmarshallAcademy(s);
-		System.out.println(ac2);
+		System.out.println(m.makePrettyString(s));
+		Academy ac2;
+		
+		try {
+			ac2 = m.unmarshallAcademy(s);
+			System.out.println(ac2);
+		} catch (InvalidDataException e) {
+			e.printStackTrace();
+		}
 		
 		//get list of courses which starts between two dates
 		//getListOfCoursesWhichStartsBetweenTwoDates(ac);
