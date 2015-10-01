@@ -3,6 +3,11 @@ package courses.io.ownformat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+
 /**
  * Used for validation string data.
  * @author Роман
@@ -59,13 +64,23 @@ public class Validator {
 	 * @throws InvalidDataException 
 	 */
 	public boolean validateDate(String date) throws InvalidDataException {
-		//TODO: add checking real dates (99.99.9999 shouldn't return true)
 		String regexp = "(\\d{1,2}\\.)(\\d{1,2}\\.)(\\d{4})";
 		Pattern p = Pattern.compile(regexp);
 		Matcher m = p.matcher(date);
 		if (!m.matches()) {
 			throw new InvalidDataException("Date should be in 'DD.MM.YYYY' format");
 		}
+		
+		String dateFormat = "dd.MM.yyyy";
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
+		sdf.setLenient(false);
+		try {
+			sdf.parse(date); //throws ParseException if dati is invalid
+		} catch (ParseException e) {
+			//e.printStackTrace();
+			throw new InvalidDataException("Invalid date");
+		}
+		
 		return m.matches();
 	}
 	
