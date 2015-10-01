@@ -48,8 +48,9 @@ public class Marshaller {
 	 * Returns null if test doesn't exist.
 	 * @param test
 	 * @return Test or null, depends on incoming string
+	 * @throws InvalidDataException 
 	 */
-	public Test unmarshallTest(String test) {
+	public Test unmarshallTest(String test) throws InvalidDataException {
 		if (test == null) {
 			return null;
 		}
@@ -70,8 +71,9 @@ public class Marshaller {
 	 * Returns Module(name) if test doesn't exist.
 	 * @param module
 	 * @return Module(name) or Module(name, test), depends on incoming string
+	 * @throws InvalidDataException 
 	 */
-	public Module unmarshallModule(String module) {
+	public Module unmarshallModule(String module) throws InvalidDataException {
 		Module result = new Module();
 		String[] moduleParts = module.split(Separators.MODULE_SEPARATOR);
 		// 0 - name, 1 - test
@@ -90,8 +92,9 @@ public class Marshaller {
 	 * Expected format of string "StringName;StringStartDate;StringEndDate;~StringModules".
 	 * @param course
 	 * @return Course
+	 * @throws InvalidDataException 
 	 */
-	public Course unmarshallCourse(String course) {
+	public Course unmarshallCourse(String course) throws InvalidDataException {
 		Course result = new Course();
 		
 		String[] courseParts = course.split(Separators.COURSE_SEPARATOR + Separators.LIST_SEPARATOR);
@@ -115,7 +118,7 @@ public class Marshaller {
 		return result;
 	}
 	
-	public Academy unmarshallAcademy(String academy) {
+	public Academy unmarshallAcademy(String academy) throws InvalidDataException {
 		Academy result = new Academy();
 		String[] academyParts = academy.split(Separators.ACADEMY_SEPARATOR + Separators.LIST_SEPARATOR);
 		// 0 - name, 1 - courses
@@ -167,6 +170,17 @@ public class Marshaller {
 		int day = Integer.parseInt(dates[0]);
 		
 		return new GregorianCalendar(year, month, day);
+	}
+	
+	public String makePrettyString(String string) {
+		final String NEW_LINE = "\n";
+		final String TAB = "\n\t";
+		string = string.replace(Separators.ACADEMY_SEPARATOR, NEW_LINE);
+		string = string.replace(Separators.LIST_SEPARATOR, TAB);
+
+		
+		
+		return string;
 	}
 	
 }
