@@ -2,6 +2,8 @@ package courses.model;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 /**
@@ -13,7 +15,9 @@ import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 @XStreamAlias("Course")
 public class Course extends BasicNamedEntity {
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss z")
 	private Calendar startDate;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm:ss z")
 	private Calendar endDate;
 	private Set<Module> modules = new HashSet<Module>();
 	
@@ -50,10 +54,12 @@ public class Course extends BasicNamedEntity {
 		this.modules = modules;
 	}
 	
+	@JsonIgnore
 	public String getPrettyStartDate() {
 		return formatDate(startDate);
 	}
 	
+	@JsonIgnore
 	public String getPrettyEndDate() {
 		return formatDate(endDate);
 	}
