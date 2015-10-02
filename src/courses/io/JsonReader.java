@@ -16,6 +16,7 @@ public class JsonReader extends AbstractFileReader {
 
 	public Academy read() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
+	
 		mapper.setTimeZone(TimeZone.getDefault());
 		return mapper.readValue(file, Academy.class);
 	}

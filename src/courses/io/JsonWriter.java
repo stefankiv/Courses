@@ -15,6 +15,7 @@ public class JsonWriter extends AbstractFileWriter {
 	
 	public void write(Academy ac) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
+
 		mapper.writerWithDefaultPrettyPrinter().writeValue(file, ac);
 		System.out.println("json created!");
 	}
