@@ -76,6 +76,21 @@ public class Course extends BasicNamedEntity {
 	}
 	
 	/**
+	 * Returns list of visible tests
+	 * 
+	 * @return all tests, which hidden == false
+	 */
+	public List<Test> getAllUnhideTests() {
+		List<Test> list = new ArrayList<Test>();
+		for (Module module : modules) {
+			if (module.getTest() != null && !module.getTest().isHidden()) {			
+				list.add(module.getTest());
+			}
+		}
+		return list;
+	}
+	
+	/**
 	 * Returns string representation of date in format DD.MM.YYYY.
 	 * 
 	 * @param c Calendar instance to be converted
@@ -94,7 +109,5 @@ public class Course extends BasicNamedEntity {
 				+ ", end date: " + formatDate(endDate)
 				+ modules;
 	}
-	
-	
 	
 }

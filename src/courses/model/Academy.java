@@ -48,6 +48,15 @@ public class Academy extends BasicNamedEntity {
 		courses.add(course);
 	}
 	
+	public Course getCourseByName(String name) {
+		for (Course course : courses) {
+			if (course.getName().equals(name)) {
+				return course;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Returns list of courses, which starts between two dates
 	 * 
@@ -55,10 +64,7 @@ public class Academy extends BasicNamedEntity {
 	 * @param endDate end date
 	 * @return list of courses, which starts between beginning date and end date
 	 */
-	public List<Course> renameThisMethodWithSomeProperName(Calendar beginningDate, Calendar endDate) {  
-		//getCoursesWhichStartsBetween() ??????
-		//varargs
-		
+	public List<Course> getCoursesWhichStartsBetweenTwoDates(Calendar beginningDate, Calendar endDate) {  
 		List<Course> list = new ArrayList<Course>();
 		for (Course c : courses) {
 			if (c.getStartDate().after(beginningDate) 
@@ -67,6 +73,23 @@ public class Academy extends BasicNamedEntity {
 			}
 		}
 		
+		return list;
+	}
+	
+	/**
+	 * Returns list of courses, which starts in a week
+	 * 
+	 * @return list of courses, which starts in a week
+	 */
+	public List<Course> getCoursesWhichStartsInAWeek() {
+		List<Course> list = new ArrayList<Course>();
+		Calendar deadline = new GregorianCalendar(); //current date
+		deadline.add(Calendar.DAY_OF_YEAR, 7); //+7 days
+		for (Course course : courses) {
+			if (course.getStartDate().before(deadline)) {
+				list.add(course);
+			}
+		}
 		return list;
 	}
 

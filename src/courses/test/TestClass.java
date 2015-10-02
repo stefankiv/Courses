@@ -2,6 +2,8 @@ package courses.test;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import courses.io.*;	
 import courses.io.ownformat.*;
@@ -15,8 +17,15 @@ public class TestClass {
 		//Academy ac = getAcademyFromConsole();
 		System.out.println(ac);
 		
+		//courses, which starts in a week
+		System.out.println(ac.getCoursesWhichStartsInAWeek());
+		
+		//visible tests
+		System.out.println(ac.getCourseByName(".NET course").getAllUnhideTests());
+		
+		
 		//marshaller test
-		marshaller2Test();
+		//marshaller2Test();
 		
 		/*
 		Marshaller2 m = new Marshaller2();
@@ -33,8 +42,6 @@ public class TestClass {
 			e.printStackTrace();
 		}*/
 		
-		//get list of courses which starts between two dates
-		//getListOfCoursesWhichStartsBetweenTwoDates(ac);
 		
 		//input/output
 		/*
@@ -64,9 +71,9 @@ public class TestClass {
 		Academy ac = new Academy("Chernivtsi IT Academy");
 		
 		Course tempCourse = new Course();
-		tempCourse.setStartDate(new GregorianCalendar(2015, 11, 25));
-		tempCourse.setEndDate(new GregorianCalendar(2015, 6, 24));
 		tempCourse.setName("Java course");
+		tempCourse.setStartDate(new GregorianCalendar(2015, 9, 8)); //8.10.2015
+		tempCourse.setEndDate(new GregorianCalendar(2015, 11, 11));
 		tempCourse.addModule(new Module("Module 1"));
 		tempCourse.addModule(new Module("Module 2"));
 		tempCourse.addModule(new Module("Module 3"));
@@ -74,11 +81,14 @@ public class TestClass {
 		ac.addCourse(tempCourse);
 		
 		tempCourse = new Course();
-		tempCourse.setStartDate(new GregorianCalendar(2015, 5, 15));
-		tempCourse.setEndDate(new GregorianCalendar(2015, 8, 19));
+		tempCourse.setStartDate(new GregorianCalendar(2015, 9, 13)); //13.10.2015
+		tempCourse.setEndDate(new GregorianCalendar(2016, 1, 19));
 		tempCourse.setName(".NET course");
 		tempCourse.addModule(new Module("Module 1"));
 		tempCourse.addModule(new Module("Module 2"));
+		tempCourse.addModule(new Module("TestModule 3", new Test("Visible test 1", false))); //visible
+		tempCourse.addModule(new Module("TestModule 4", new Test("Hidden test 2", true)));
+		tempCourse.addModule(new Module("TestModule 5", new Test("Visible test 3", false))); //visible
 		ac.addCourse(tempCourse);
 		
 		return ac;	
@@ -98,7 +108,7 @@ public class TestClass {
 	public static void getListOfCoursesWhichStartsBetweenTwoDates(Academy ac) {
 		Calendar beginningDate = new GregorianCalendar(2015, 4, 15);
 		Calendar endDate = new GregorianCalendar(2015, 6, 15);
-		System.out.println(ac.renameThisMethodWithSomeProperName(beginningDate, endDate));
+		System.out.println(ac.getCoursesWhichStartsBetweenTwoDates(beginningDate, endDate));
 	}
 	
 	public static void marshaller2Test() {
