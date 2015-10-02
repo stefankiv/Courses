@@ -14,38 +14,41 @@ import courses.model.Module;
 import courses.model.Test;
 
 public class Marshaller2 {
-	public static final String SEPARATOR = ":";
-	public static final String DATE_SEPARATOR = ".";
+	public static final String FIELD_SEPARATOR = ":";
+	public static final String SET_SEPARATOR = "|";	
+	public static final String DATE_SEPARATOR = "\\.";
 	public static final String OPEN_BRACE = "[";
 	public static final String CLOSE_BRACE = "]";
+	public static final String REG_EXP_FOR_COUNTER = ":\\[";
+	
 	
 	private Validator2 validator = new Validator2();
 	
 	public Marshaller2() { };
 	
 	public String marshall(Test test) {
-		return test.getName() + SEPARATOR + test.isHidden();
+		return test.getName() + FIELD_SEPARATOR + test.isHidden();
 	}
 	
 	public String marshall(Module module) {
 		if (module.getTest() == null) {
-			return module.getName() + SEPARATOR + OPEN_BRACE + CLOSE_BRACE;
+			return module.getName() + FIELD_SEPARATOR + OPEN_BRACE + CLOSE_BRACE;
 		}
-		return module.getName() + SEPARATOR + OPEN_BRACE
+		return module.getName() + FIELD_SEPARATOR + OPEN_BRACE
 				+ marshall(module.getTest()) + CLOSE_BRACE;
 	}
 	
 	public String marshall(Course course) {
-		return course.getName() + SEPARATOR
-				+ course.getPrettyStartDate() + SEPARATOR
-				+ course.getPrettyEndDate() + SEPARATOR
+		return course.getName() + FIELD_SEPARATOR
+				+ course.getPrettyStartDate() + FIELD_SEPARATOR
+				+ course.getPrettyEndDate() + FIELD_SEPARATOR
 				+ OPEN_BRACE
 				+ marshallSet(course.getModules())
 				+ CLOSE_BRACE;
 	}
 	
 	public String marshall(Academy academy) {
-		return academy.getName() + SEPARATOR
+		return academy.getName() + FIELD_SEPARATOR
 				+ OPEN_BRACE
 				+ marshallSet(academy.getCourses())
 				+ CLOSE_BRACE;
@@ -60,8 +63,8 @@ public class Marshaller2 {
 		Test result = new Test();
 		//inc: name:hidden
 		//      0     1
-		result.setName(test.split(SEPARATOR)[0]);
-		result.setHidden(test.split(SEPARATOR)[1].equals("true") ? true : false);
+		result.setName(test.split(FIELD_SEPARATOR)[0]);
+		result.setHidden(test.split(FIELD_SEPARATOR)[1].equals("true") ? true : false);
 		return result;
 	}
 	
@@ -74,7 +77,7 @@ public class Marshaller2 {
 		//inc: mouleName:[test]
 		//        0        1
 		result.setName(module.split(":", 2)[0]);
-		result.setTest(unmarshallTest(removeBraces(module.split(SEPARATOR, 2)[1])));
+		result.setTest(unmarshallTest(removeBraces(module.split(FIELD_SEPARATOR, 2)[1])));
 		return result;
 	}
 	
@@ -85,32 +88,23 @@ public class Marshaller2 {
 		validator.validateCourse(course);
 		Course result = new Course();
 		//inc: courseName:startDate:endDate[modules]
-		//        0 	      1        2      3
-		result.setName(course.split(SEPARATOR, 4)[0]);
-		result.setStartDate(unmarshallDate(course.split(SEPARATOR, 4)[1]));
-		result.setName(course.split(SEPARATOR, 4)[2]);
+		//        0 	      1        2       3
+		String[] courseParts = course.split(FIELD_SEPARATOR, 4);
+		result.setName(courseParts[0]);
+		result.setStartDate(unmarshallDate(courseParts[1]));
+		result.setEndDate(unmarshallDate(courseParts[2]));
 		
-		System.out.println(countElements(course.split(SEPARATOR, 4)[3]));
-			
+		System.out.println(removeBraces(courseParts[3]));
+		for (String module : courseParts[3].split(SET_SEPARATOR)) {
+			result.addModule(unmarshallModule(module));
+		}
+		
 		
 		return null;
 	}
 	
-	private int countElements(String set) {
-		int count = 0;
-		String regexp = ":\\[";
-		Pattern pattern = Pattern.compile(regexp);
-		Matcher matcher = pattern.matcher(set);
-		while (matcher.find()) {
-			count++;
-		}
-		return count;
-	}
-	
 	private Calendar unmarshallDate(String date) {
-		System.out.println(date);
 		String[] dates = date.split(DATE_SEPARATOR);
-		System.out.println(dates[0]);
 		int year = Integer.parseInt(dates[2]);
 		int month = Integer.parseInt(dates[1]) - 1;
 		int day = Integer.parseInt(dates[0]);
@@ -129,14 +123,14 @@ public class Marshaller2 {
 			} else if (item instanceof Module) {
 				result += marshall((Module) item);
 			}
-			if (iterator.hasNext()) result += SEPARATOR;
+			if (iterator.hasNext()) result += SET_SEPARATOR;
 		}
 		
 		return result;
 	}
 	
 	private String removeBraces(String string) {
-		final String REGEXP = "\\[|\\]";
+		final String REGEXP = "^\\[|\\]$";
 		return string.replaceAll(REGEXP, "");
 	}
 	
