@@ -16,12 +16,14 @@ public class TestClass {
 		System.out.println(ac);
 		
 		//marshaller test
-		//marshallerTest();
+		marshaller2Test();
 		
-		Marshaller m = new Marshaller();
+		/*
+		Marshaller2 m = new Marshaller2();
 		String s = m.marshall(ac);
 		System.out.println(s);
 		System.out.println(m.makePrettyString(s));
+		
 		Academy ac2;
 		
 		try {
@@ -29,7 +31,7 @@ public class TestClass {
 			System.out.println(ac2);
 		} catch (InvalidDataException e) {
 			e.printStackTrace();
-		}
+		}*/
 		
 		//get list of courses which starts between two dates
 		//getListOfCoursesWhichStartsBetweenTwoDates(ac);
@@ -99,7 +101,7 @@ public class TestClass {
 		System.out.println(ac.renameThisMethodWithSomeProperName(beginningDate, endDate));
 	}
 	
-	public static void marshallerTest() {
+	public static void marshaller2Test() {
 		Test test = new Test("qweTest", true);
 		Module module = new Module("qweModule", test);
 		Course course = new Course();
@@ -109,16 +111,22 @@ public class TestClass {
 		course.addModule(new Module("Module 1"));
 		course.addModule(new Module("Module 2", test));
 		
-		Marshaller m = new Marshaller();
+		Marshaller2 m = new Marshaller2();
 		String str;
 		
 		System.out.println(course);
 		str = m.marshall(course);
 		System.out.println(str);
-		//Test temp = m.unmarshallTest(str);
+		Course temp;
+		try {
+			temp = m.unmarshallCourse(str);
+			System.out.println(temp);
+		} catch (InvalidDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//Module temp = m.unmarshallModule(str);
 		//Course temp = m.unmarshallCourse(str);
-		//System.out.println(temp);
 	}
 	
 	

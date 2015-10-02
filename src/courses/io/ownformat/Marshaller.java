@@ -175,8 +175,8 @@ public class Marshaller {
 	public String makePrettyString(String string) {
 		final String NEW_LINE = "\n";
 		final String TAB = "\t";
-		string = string.replace(Separators.ACADEMY_SEPARATOR, NEW_LINE);
-
+		string = string.replace(Separators.LIST_SEPARATOR, NEW_LINE);
+		
 		
 		
 		return string.trim();

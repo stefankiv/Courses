@@ -1,12 +1,10 @@
 package courses.io.ownformat;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Used for validation string data.
@@ -14,6 +12,7 @@ import java.util.Date;
  *
  */
 public class Validator {
+	public static final String NAME_PATTERN = "^[\\DA-Z_.].*";
 	
 	public Validator() { };
 	
@@ -40,7 +39,7 @@ public class Validator {
 	 * @throws InvalidDataException 
 	 */
 	public boolean validateName(String name) throws InvalidDataException {
-		String regexp = "^[\\DA-Z_.].*";
+		String regexp = NAME_PATTERN;
 		Pattern p = Pattern.compile(regexp);
 		Matcher m = p.matcher(name);
 		if (!m.matches()) {
@@ -75,7 +74,7 @@ public class Validator {
 		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
 		sdf.setLenient(false);
 		try {
-			sdf.parse(date); //throws ParseException if dati is invalid
+			sdf.parse(date); //throws ParseException if date is invalid
 		} catch (ParseException e) {
 			//e.printStackTrace();
 			throw new InvalidDataException("Invalid date");
